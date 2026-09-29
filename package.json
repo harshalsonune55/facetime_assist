@@ -1,0 +1,41 @@
+{
+  "name": "clue",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Invisible AI overlay \u2014 sees your screen, hears your call, answers in real time.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "pack": "npx --yes electron-builder --mac --dir && ./scripts/sign.sh",
+    "dist": "npx --yes electron-builder --mac",
+    "app": "npm run pack && rm -rf /Applications/Clue.app && cp -R \"${TMPDIR:-/tmp}/clue-stage/Clue.app\" /Applications/"
+  },
+  "devDependencies": {
+    "electron": "^44.3.0"
+  },
+  "build": {
+    "appId": "com.clue.overlay",
+    "productName": "Clue",
+    "files": [
+      "src/**",
+      "renderer/**",
+      "package.json",
+      "node_modules/**"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "Clue listens to your meeting audio to answer questions in real time.",
+        "NSScreenCaptureUsageDescription": "Clue reads your screen so it can answer questions about what you are looking at.",
+        "LSUIElement": 1
+      },
+      "icon": "build/icon.icns",
+      "identity": null
+    }
+  }
+}

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:;" />
+    <title>Clue</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div id="bar" data-hit>
+        <div class="drag-handle" id="dragHandle" title="Drag to move Clue (⌘⇧ + arrows)" aria-label="Move window">
+          <svg viewBox="0 0 10 16" width="10" height="16" aria-hidden="true" focusable="false">
+            <circle cx="2" cy="3" r="1.35" />
+            <circle cx="8" cy="3" r="1.35" />
+            <circle cx="2" cy="8" r="1.35" />
+            <circle cx="8" cy="8" r="1.35" />
+            <circle cx="2" cy="13" r="1.35" />
+            <circle cx="8" cy="13" r="1.35" />
+          </svg>
+        </div>
+
+        <div class="brand" id="drag">
+          <span class="dot" id="dot"></span>
+          <span class="brand-name">Clue</span>
+        </div>
+
+        <input
+          id="input"
+          type="text"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Ask anything…"
+        />
+
+        <button id="screenBtn" class="chip" type="button" title="Answer from what's on screen (⌘⇧↵)">
+          Screen
+        </button>
+        <button id="listenBtn" class="chip" type="button" title="Listen to the call (⌘L)">
+          <span class="rec"></span><span id="listenLabel">Listen</span>
+        </button>
+        <button id="autoBtn" class="chip" type="button" title="Answer questions the moment they are asked">
+          Auto
+        </button>
+        <span id="timer" class="timer hidden">00:00</span>
+
+        <button id="settingsBtn" class="icon" type="button" title="Settings (⌘,)">⚙</button>
+        <button id="hideBtn" class="icon" type="button" title="Hide (⌘\)">✕</button>
+      </div>
+
+      <div id="panel" class="card hidden" data-hit>
+        <div id="answer" class="markdown"></div>
+        <div id="status" class="status hidden"></div>
+        <div class="panel-foot">
+          <span id="heard" class="heard"></span>
+          <span class="spacer"></span>
+          <button id="stopBtn" class="link hidden" type="button">stop</button>
+          <button id="copyAllBtn" class="link" type="button">copy</button>
+          <button id="clearBtn" class="link" type="button">clear</button>
+        </div>
+      </div>
+
+      <div id="settings" class="card hidden" data-hit>
+        <div class="settings-head">
+          <strong>Settings</strong>
+          <button id="closeSettings" class="icon" type="button">✕</button>
+        </div>
+
+        <label class="field">
+          <span>OpenAI API key<em id="openaiState"></em></span>
+          <input id="openaiKey" type="password" placeholder="sk-proj-..." autocomplete="off" />
+        </label>
+
+        <div class="row">
+          <label class="field">
+            <span>Model</span>
+            <select id="model" disabled>
+              <option value="gpt-5.6-sol">GPT-5.6 Sol · flagship</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Effort</span>
+            <select id="effort" disabled>
+              <option value="high">High</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>About you — pasted into every answer as context</span>
+          <textarea
+            id="profile"
+            rows="4"
+            placeholder="Your role, your résumé, the product you're selling, the stack you work in…"
+          ></textarea>
+        </label>
+
+        <div class="divider"><span>Listen mode (speech → text)</span></div>
+        <label class="field">
+          <span>Transcription API key<em id="sttState"></em></span>
+          <input id="sttKey" type="password" placeholder="blank = use the OpenAI key above" autocomplete="off" />
+        </label>
+        <div class="row">
+          <label class="field">
+            <span>Endpoint</span>
+            <input id="sttBaseUrl" type="text" spellcheck="false" />
+          </label>
+          <label class="field">
+            <span>Model</span>
+            <input id="sttModel" type="text" spellcheck="false" />
+          </label>
+        </div>
+
+        <div class="divider"><span>Shortcuts</span></div>
+        <div class="row">
+          <label class="field"><span>Show / hide</span><input id="sc-toggle" type="text" spellcheck="false" /></label>
+          <label class="field"><span>Ask</span><input id="sc-ask" type="text" spellcheck="false" /></label>
+        </div>
+        <div class="row">
+          <label class="field"><span>Ask about screen</span><input id="sc-screenshotAsk" type="text" spellcheck="false" /></label>
+          <label class="field"><span>Listen</span><input id="sc-listen" type="text" spellcheck="false" /></label>
+        </div>
+        <div class="row">
+          <label class="field"><span>New session</span><input id="sc-reset" type="text" spellcheck="false" /></label>
+          <label class="field"><span>Move window</span><input type="text" value="⌘⇧ + arrows" disabled /></label>
+        </div>
+
+        <div id="permission" class="perm hidden">
+          <span></span>
+          <button id="permBtn" class="link" type="button">Open System Settings</button>
+        </div>
+
+        <div class="settings-foot">
+          <button id="quitBtn" class="link danger" type="button">Quit Clue</button>
+          <span class="spacer"></span>
+          <span id="saved" class="saved"></span>
+          <button id="saveBtn" class="primary" type="button">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="markdown.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
